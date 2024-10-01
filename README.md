@@ -6,4 +6,4 @@ a simple software task Agent Call Tracker Agent Call Tracker is a simple web app
 
 Install **node modules** for the code to work
 
-Refer the **setup instructions ** given in the documentation for installation of packages .
+Refer the **setup instructions** given in the documentation for installation of packages .
