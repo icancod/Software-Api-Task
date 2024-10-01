@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Call Tracker</title>
+    <!-- <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style> -->
+</head>
+<body>
+    <h1>Agent Call Tracker</h1>
+    <label for="start">Start Timestamp (Unix):</label>
+    <input type="text" id="start" value="1630454400">
+    <label for="end">End Timestamp (Unix):</label>
+    <input type="text" id="end" value="1630540800">
+    <button onclick="fetchCallData()">Get Call Data</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Agent Name</th>
+                <th>Connected Calls</th>
+                <th>Not Connected Calls</th>
+                <th>Agent Mail</th>
+            </tr>
+        </thead>
+        <tbody id="agent-call-data">
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchCallData() {
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
+            const response = await fetch(`http://localhost:3000/api/agent-calls?start=${start}&end=${end}`);
+            const data = await response.json();
+            
+            const tbody = document.getElementById('agent-call-data');
+            tbody.innerHTML = '';
+
+            data.forEach(agent => {
+                const row = `<tr>
+                    <td>${agent.name}</td>
+                    <td>${agent.connected_calls}</td>
+                    <td>${agent.not_connected_calls}</td>
+                    <td>${agent.mail}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>
